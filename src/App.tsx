@@ -12,20 +12,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-// import { Route, Routes } from "react-router-dom";
-// import "./App.css";
-// import State from "./State";
-// import PagesTwo from "./PagesTwo";
-
-// function App() {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<State />} />
-//       <Route path="/PagesTwo" element={<PagesTwo />} />
-//     </Routes>
-//   );
-// }
