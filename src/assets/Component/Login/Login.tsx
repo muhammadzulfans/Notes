@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
-import {auth, provider} from "../GoogleSignIn/Config";
+import { auth, provider } from "../GoogleSignIn/Config";
 import { signInWithPopup } from "firebase/auth";
 import Home from "../Home/Home";
-
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const [value, setValue] = useState<string | null>(null);
-  const handleClick = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      setValue(data.user.email || "");
-      localStorage.setItem("email", data.user.email || "");
-    });
-  };
+     const [value, setValue] = useState<string>("");
+     const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedEmail = localStorage.getItem("email");
-    setValue(storedEmail || "");
-  }, []);
+     const handleClick = () => {
+          signInWithPopup(auth, provider).then((data) => {
+               setValue(data.user.email || "");
+               localStorage.setItem("email", data.user.email || "");
+               navigate("../Home/Home.tsx")
+          });
+     };
 
+     useEffect(() => {
+          const storedEmail = localStorage.getItem("email");
+          setValue(storedEmail || "");
+          navigate("../Home/Home.tsx")
+     }, [navigate]);
 
      return (
           <div className="bg-orange-100 h-screen">
@@ -26,11 +29,14 @@ const Login: React.FC = () => {
                          <p className="flex">Login with google</p>
                     </div>
                     <div className="py-2 px-4 flex justify-center text-xl text-orange-800">
-                      {
-                        value?<Home/>:
-                        <button onClick={handleClick} className="border border-orange-700 rounded-full py-2 px-24">Sign In</button>
-                      }
-                    </div>  
+                         {value ? (
+                              <Home />
+                         ) : (
+                              <button onClick={handleClick} className="border border-orange-700 rounded-full py-2 px-24">
+                                   Sign In
+                              </button>
+                         )}
+                    </div>
                </div>
           </div>
      );
