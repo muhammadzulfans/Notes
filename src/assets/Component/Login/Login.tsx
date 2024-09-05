@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { auth, provider } from "../GoogleSignIn/Config";
 import { signInWithPopup } from "firebase/auth";
-import Home from "../Home/Home";
+import Home from "../Home/Home.tsx";
 import { useNavigate } from "react-router-dom";
+// import {Link} from "react-router-dom";
 
 const Login: React.FC = () => {
      const [value, setValue] = useState<string>("");
@@ -12,14 +13,14 @@ const Login: React.FC = () => {
           signInWithPopup(auth, provider).then((data) => {
                setValue(data.user.email || "");
                localStorage.setItem("email", data.user.email || "");
-               navigate("../Home/Home.tsx")
+               navigate("/Home")
           });
      };
 
      useEffect(() => {
           const storedEmail = localStorage.getItem("email");
           setValue(storedEmail || "");
-          navigate("../Home/Home.tsx")
+          navigate("/Home")
      }, [navigate]);
 
      return (
