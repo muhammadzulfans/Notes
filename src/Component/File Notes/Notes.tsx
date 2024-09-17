@@ -1,15 +1,18 @@
 import React from "react";
 
 const Notes: React.FC = () => {
+     const handleBack = () => {
+          window.location.href = "/home";
+     }
      return (
           <div className="bg-orange-300 h-screen">
                <div className="text-4xl p-16 font-mono">
                     <div className="flex justify-between grid-rows-2 px-16">
-                         <button>
-                              <img src="/src/assets/left-arrow.png" className="w-10" />
+                         <button onClick={handleBack}>
+                              <img src="/src/assets/left-arrow.png" className="w-16" />
                          </button>
                          <button>
-                              <img src="/src/assets/check.png" className="w-10" />
+                              <img src="/src/assets/check.png" className="w-16" />
                          </button>
                     </div>
                     <form>
