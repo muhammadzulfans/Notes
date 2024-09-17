@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { auth, provider } from "../GoogleSignIn/Config";
+import React, { useState } from "react";
+import { auth, provider } from "../GoogleSignIn/Config.tsx";
 import { signInWithPopup } from "firebase/auth";
-import Home from "../Home/Home.tsx";
 import { useNavigate } from "react-router-dom";
+import Home from "../Home/Home.tsx";
 // import {Link} from "react-router-dom";
 
 const Login: React.FC = () => {
@@ -13,15 +13,15 @@ const Login: React.FC = () => {
           signInWithPopup(auth, provider).then((data) => {
                setValue(data.user.email || "");
                localStorage.setItem("email", data.user.email || "");
-               navigate("/Home")
+               navigate("/home")
           });
      };
 
-     useEffect(() => {
-          const storedEmail = localStorage.getItem("email");
-          setValue(storedEmail || "");
-          navigate("/Home")
-     }, [navigate]);
+     // useEffect(() => {
+     //      const storedEmail = localStorage.getItem("email");
+     //      setValue(storedEmail || "");
+     //      navigate("/home")
+     // }, [navigate]);
 
      return (
           <div className="bg-orange-100 h-screen">
