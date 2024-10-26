@@ -1,5 +1,5 @@
 import React from "react";
-// import Login from "../Login/Login.tsx";
+import Read from "../CRUD/read";
 
 const Home: React.FC = () => {
      const handlelogout = () => {
@@ -21,6 +21,9 @@ const Home: React.FC = () => {
                     </button>
                </div>
 
+               <div className="read-notes">
+                    <Read />
+               </div>
                <div className="flex justify-end mt-96 text-5xl font-serif p-28 ">
                     <button onClick={handleNotes} className="py-3 px-6 rounded-full border-2 border-orange-800 ">
                          +
