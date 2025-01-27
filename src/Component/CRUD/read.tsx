@@ -1,62 +1,41 @@
-import { db } from "../GoogleSignIn/Config";
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
+import { db } from "../GoogleSignIn/Config";
 
-interface Notes {
+interface Note {
      id: string;
-     title: string;
-     content: string;
+     judul: string;
+     deskripsi: string;
 }
 
-const ReadNotes: React.FC = () => {
-     const handleNotes = () => {
-          window.location.href = "/notes";
-     };
+const Read: React.FC = () => {
+     const [notes, setNotes] = useState<Note[]>([]);
 
-     const [notes, setNotes] = useState<Notes[]>([]);
+     useEffect(() => {
+          const fetchNotes = async () => {
+               const notesCollection = collection(db, "notes");
+               const notesSnapshot = await getDocs(notesCollection);
+               const notesList = notesSnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+               })) as Note[];
+               setNotes(notesList);
+          };
 
-     // const fetchNotes = async () => {
-     //      try {
-     //           const querySnapshot = await getDocs(collection(db, "notes"));
-     //           const notesData: Notes[] = querySnapshot.docs.map(
-     //                (doc) =>
-     //                     ({
-     //                          id: doc.id,
-     //                          ...doc.data(),
-     //                     } as Notes)
-     //           );
-     //           setNotes(notesData);
-     //      } catch (error) {
-     //           console.error("Error fetching notes: ", error);
-     //      }
-     // };
-
-     // useEffect(() => {
-     //      fetchNotes();
-     // }, []);
+          fetchNotes();
+     }, []);
 
      return (
-          <div>
-               <ul>
-                    {notes.map((notes) => (
-                         <li key={notes.id}>
-                              <h2>{notes.title}</h2>
-                              <p>{notes.content}</p>
-                         </li>
-                    ))}
-               </ul>
-               {/* <button onClick={handleNotes} className=" max-w-sm m-20 p-6 rounded-xl hover:bg-orange-400 bg-orange-300">
-                    <h5 className="text-start mb-2 text-4xl font-bold font-serif text-gray-700 hover:text-gray-900">judul</h5>
-                    <p className="text-start font-mono text-gray-700 hover:text-gray-900">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-               </button> */}
+          <div className="px-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
+               {notes.map((note) => (
+                    <div key={note.id} className="bg-orange-300 shadow-md rounded-lg p-8">
+                         <h2 className="text-2xl font-bold mb-4">{note.judul}</h2>
+                         <p className="text-gray-500">{note.deskripsi}</p>
+                    </div>
+               ))}
           </div>
      );
 };
 
-export default ReadNotes;
+export default Read;
 
-// const [loading, setLoading] = useState(true);
-// setLoading(false);
-// if (loading) {
-//      return <div>Loading...</div>;
-// }
